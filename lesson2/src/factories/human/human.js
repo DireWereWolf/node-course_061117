@@ -1,3 +1,5 @@
+const logger = require('../../logger');
+
 class Human {
     constructor({name, emitter}) {
         this.name = name;
@@ -6,11 +8,11 @@ class Human {
 
         emitter.on('shoot', (bullet) => {
            if (bullet) {
-               this.isDead = true;
-               console.log('Game over');
+             this.isDead = true;
+             logger('Game over');
            } else {
-               console.log('Game go on');
-               return;
+             logger('Game go on');
+             return;
             }
         });
     }
@@ -20,8 +22,8 @@ class Human {
       this.emitter.emit('triggerHummer');
       setInterval(() => {
         if (!this.isDead){
-            this.emitter.emit('roll');
-            this.emitter.emit('triggerHummer');
+            // this.emitter.emit('roll');
+            // this.emitter.emit('triggerHummer');
         }
       }, 3000);
     }
