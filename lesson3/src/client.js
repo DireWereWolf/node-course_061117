@@ -1,4 +1,3 @@
-const stream = require('stream');
 const net = require('net');
 
 const config = {
@@ -7,20 +6,13 @@ const config = {
 };
 
 const socket = new net.Socket();
-const reader = new stream.read();
 
-reader._read = function (chunk, encoding, callback) {
-  console.log(chunk);
-};
-
-socket.connect(config.port, config.host, () => {
+socket.connect(config.port, config.host, function(){
   console.log(`Connected on host ${config.host} and port ${config.port}`);
-  process.stdin.pipe(reader);
+  process.stdin.pipe(this).pipe(process.stdout);
 });
 
-// const reader = process.stdin;
-//
-// reader._read = function (chunk, encoding, callback) {
-//
-// };
-//
+socket.on('close', function () {
+  process.stdin.unpipe(this);
+  this.unpipe(process.stdout);
+});

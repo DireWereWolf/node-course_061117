@@ -36,15 +36,15 @@ let stations = {
 
 server.on('connection', socket => {
   console.log('%s:%s is connected\r\n', socket.remoteAddress, socket.remotePort);
-socket.pipe(stations['#global'], {end: false}).pipe(socket, {end: false})
+  socket.pipe(stations['#global'], {end: false}).pipe(socket, {end: false})
 
-socket.on('close', has_err => {
-  has_err && console.warn('socket will be closed due to an error')
-})
+  socket.on('close', has_err => {
+    has_err && console.warn('socket will be closed due to an error')
+  })
 
-socket.write('whats up\r\n')
+  socket.write('whats up\r\n')
 
-return;
+  return;
 })
 
 server.on('error', err => {
